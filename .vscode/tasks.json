@@ -1,0 +1,12 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build Mod",
+            "command": "mkdir build; cd build; cmake -G 'Visual Studio 17' ..; msbuild APluginTemplate.sln",
+            "detail": "Build the APluginTemplate mod.",
+            "problemMatcher": []
+        }
+    ]
+}
