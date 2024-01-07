@@ -12,7 +12,7 @@
 #define ModFunction extern "C" __declspec(dllexport)
 
 static ClientInstance* gameClient = nullptr;
-FovManager* fovManager = nullptr;
+FovManager* fovManager = new FovManager();
 HookManager hookManager;
 
 ModFunction void RegisterInputs(InputManager* inputManager) { inputManager->RegisterInput("zoom", 0x43); }
@@ -20,17 +20,16 @@ ModFunction void RegisterInputs(InputManager* inputManager) { inputManager->Regi
 ModFunction void Initialize(const char* gameVersion, InputManager* inputManager) { 
     MH_Initialize();
 
-    fovManager = new FovManager();
     inputManager->AddButtonDownHandler("zoom", [](FocusImpact fi, IClientInstance ci) { fovManager->buttonDown(); });
     inputManager->AddButtonUpHandler("zoom", [](FocusImpact fi, IClientInstance ci) { fovManager->buttonUp(); });
 }
 
-ModFunction void OnTickAfter() { if(gameClient != nullptr) fovManager->tick(); }
-ModFunction void OnStartJoinGame(ClientInstance* instance) { gameClient = instance; }
+ModFunction void OnTickAfter() { fovManager->tick(); }
 ModFunction void Shutdown() {
     fovManager->resetFov();
-    hookManager.Shutdown();
     free(fovManager);
+
+    hookManager.Shutdown();
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) { return TRUE; }

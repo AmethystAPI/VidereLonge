@@ -6,8 +6,8 @@
 class FovManager {
 private:
     __bfloat16 initialFov;
-    HANDLE hProcess;
-    bool zoom;
+    HANDLE hProcess = 0;
+    bool zoom = false;
 
     uintptr_t getAddress();
 public:

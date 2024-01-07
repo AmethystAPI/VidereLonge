@@ -1,4 +1,5 @@
 #include "MemoryUtils.h"
+#include "amethyst/Log.h"
 
 uintptr_t FindDMAAddy(HANDLE hProc, uintptr_t ptr, std::vector<unsigned int> offsets) {
     uintptr_t addr = ptr;
@@ -12,8 +13,8 @@ uintptr_t FindDMAAddy(HANDLE hProc, uintptr_t ptr, std::vector<unsigned int> off
 }
 
 DWORD GetProcessIdByName(const wchar_t* processName) {
-    DWORD processId = 0;
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    DWORD processId = 0;
 
     if (snapshot != INVALID_HANDLE_VALUE) {
         PROCESSENTRY32 processEntry;

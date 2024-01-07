@@ -5,7 +5,7 @@ FovManager::FovManager() {
 }
 
 uintptr_t FovManager::getAddress() {
-    if(hProcess == nullptr) {
+    if(hProcess == 0) {
         DWORD procId = GetProcessIdByName(L"Minecraft.Windows.exe");
         hProcess = OpenProcess(PROCESS_ALL_ACCESS, NULL, procId);
     }
@@ -44,13 +44,13 @@ void FovManager::tick() {
 
 void FovManager::zoomIn() {
     float fov = getFov();
-    if(fov <= 30) return setFov(30);
+    if(fov <= 30) return;
 
     float rate = (initialFov - 30) / 20;
     setFov(fov - rate);
 }
 
-bool zoomingOut;
+bool zoomingOut = false;
 void FovManager::zoomOut() {
     float fov = getFov();
     if(fov >= initialFov) { zoomingOut = false; return; };
