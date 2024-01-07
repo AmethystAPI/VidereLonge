@@ -67,6 +67,9 @@
         "xmemory": "cpp",
         "xtr1common": "cpp",
         "xtree": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "codecvt": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp"
     }
 }

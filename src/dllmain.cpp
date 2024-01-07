@@ -1,28 +1,36 @@
-#include <Windows.h>
+#include "minecraft/src-client/common/client/renderer/LevelRendererPlayer.h"
+#include "minecraft/src-client/common/client/game/ClientInstance.h"
 
+#include "amethyst/InputManager.h"
 #include "amethyst/HookManager.h"
 #include "amethyst/Log.h"
 #include "MinHook.h"
 
-#include "minecraft/src-client/common/client/renderer/screen/MinecraftUIRenderContext.h"
-#include "minecraft/src-client/common/client/gui/ScreenView.h"
+#include "FovManager.h"
+#include <thread>
+
+#define ModFunction extern "C" __declspec(dllexport)
 
 static ClientInstance* gameClient = nullptr;
+FovManager* fovManager = nullptr;
 HookManager hookManager;
 
+ModFunction void RegisterInputs(InputManager* inputManager) { inputManager->RegisterInput("zoom", 0x43); }
+
+ModFunction void Initialize(const char* gameVersion, InputManager* inputManager) { 
+    MH_Initialize();
+
+    fovManager = new FovManager();
+    inputManager->AddButtonDownHandler("zoom", [](FocusImpact fi, IClientInstance ci) { fovManager->buttonDown(); });
+    inputManager->AddButtonUpHandler("zoom", [](FocusImpact fi, IClientInstance ci) { fovManager->buttonUp(); });
+}
+
+ModFunction void OnTickAfter() { if(gameClient != nullptr) fovManager->tick(); }
+ModFunction void OnStartJoinGame(ClientInstance* instance) { gameClient = instance; }
+ModFunction void Shutdown() {
+    fovManager->resetFov();
+    hookManager.Shutdown();
+    free(fovManager);
+}
+
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) { return TRUE; }
-
-// Called when a mod is loaded by AmethystAPI, used to create hooks
-extern "C" __declspec(dllexport) void Initialize(const char* gameVersion) { MH_Initialize(); }
-
-// Called every 50ms, currently not hooked into a real tick function
-extern "C" __declspec(dllexport) void OnTick() {}
-
-// ClientInstance::onStartJoinGame
-extern "C" __declspec(dllexport) void OnStartJoinGame(ClientInstance* instance) { gameClient = instance; }
-
-// Hooked ScreenView::setupAndRender for mods to draw UI
-extern "C" __declspec(dllexport) void OnRenderUI(ScreenView* screenView, MinecraftUIRenderContext* ctx) {}
-
-// Used to destroy hooks for hot-reloading
-extern "C" __declspec(dllexport) void Shutdown() { hookManager.Shutdown(); }
