@@ -29,28 +29,31 @@ Currently stable on Minecraft Bedrock Edition 1.20.51
 </video>
 
 ## How do I run this?
-1. Find and install the latest Amethyst Launcher release at [Amethyst's releases page](https://github.com/FrederoxDev/Amethyst/releases/latest).
-2. Open the mods folder.
+1. Ensure you have developer mode  enabled on Windows, if you don't know how see [this tutorial](https://consumer.huawei.com/en/support/content/en-us15594140/#:~:text=Click%20the%20Windows%20icon%20and,Mode%20in%20certain%20system%20versions).
+2. Use a Minecraft version manager, for example [Bedrock Launcher](https://bedrocklauncher.github.io/) or [MCLauncher](https://) (most require your PC user account to have administrator level premissions).
+3. Download, play, and close Minecraft Bedrock 1.20.51
+4. Find and install the latest Amethyst Launcher release in [Amethyst's releases page](https://github.com/FrederoxDev/Amethyst/releases/latest).
+5. Open the mods folder.
 
     <img src="assets/modFolderHover.png" width="200"/>
 
-3. Download the latest [ViderēLongē release](https://github.com/ATXLtheAxolotl/VidereLonge/releases/latest).
+6. Download the latest [ViderēLongē release](https://github.com/ATXLtheAxolotl/VidereLonge/releases/latest).
 
-4. Bring the zip file to your mods folder.
+7. Bring the zip file to your mods folder.
 
     <img src="assets/modZipped.png" width="400"/>
 
-5. Open the zip file and select the folders in it.
+8. Open the zip file and select the folders in it.
 
     <img src="assets/selectedFolders.png" width="400"/>
 
-6. Move the folders to your mod folder, the structure should look like the following.
+9. Move the folders to your mod folder, the structure should look like the following.
 
     <img src="assets/movedFolders.png" width="400"/>
 
-7. Relaunch AmethystLauncher, select `AmethystRuntime@1.0.2` under `Runtime Mod`, and click `VidereLonge@1.0.0` under `Inactive Mods` to activate it. The end result should look like this.
+10. Relaunch AmethystLauncher, select `AmethystRuntime@1.0.2` under `Runtime Mod`, and click `VidereLonge@1.0.0` under `Inactive Mods` to activate it. The end result should look like this.
 
-8. Click `Launch Game`, and enjoy VidēreLongē.
+11. Click `Launch Game`, and enjoy VidēreLongē.
 
 ## My game is crashing when I launch? What do I do?
 
