@@ -22,35 +22,31 @@
 </div>
 
 ## VidēreLongē v1.0.0
-Currently stable on Minecraft Bedrock Edition 1.20.51
+Currently stable on Minecraft Bedrock Edition 1.20.51 with Amethyst Runtime 1.1.0
 
 <video controls>
     <source src="./assets/VidereLongeExample.mp4" type="video/mp4">
 </video>
 
 ## How do I run this?
-1. Find and install the latest Amethyst Launcher release at [Amethyst's releases page](https://github.com/FrederoxDev/Amethyst/releases/latest).
+1. Find and install the Amethyst Launcher and release from [Amethyst's latest release page](https://github.com/FrederoxDev/Amethyst/releases/latest).
 2. Open the mods folder.
 
     <img src="assets/modFolderHover.png" width="200"/>
 
 3. Download the latest [ViderēLongē release](https://github.com/ATXLtheAxolotl/VidereLonge/releases/latest).
 
-4. Bring the zip file to your mods folder.
+4. Bring the zip files to your mods folder.
 
     <img src="assets/modZipped.png" width="400"/>
 
-5. Open the zip file and select the folders in it.
-
-    <img src="assets/selectedFolders.png" width="400"/>
-
-6. Move the folders to your mod folder, the structure should look like the following.
+5. Extract the zip folders, the structure should look like the following:
 
     <img src="assets/movedFolders.png" width="400"/>
 
-7. Relaunch AmethystLauncher, select `AmethystRuntime@1.0.2` under `Runtime Mod`, and click `VidereLonge@1.0.0` under `Inactive Mods` to activate it. The end result should look like this.
+6. Relaunch AmethystLauncher, select `AmethystRuntime@1.1.0` under `Runtime Mod`, and click `VidereLonge@1.0.1` under `Inactive Mods` to activate it. The end result should look like this.
 
-8. Click `Launch Game`, and enjoy VidēreLongē.
+7. Click `Launch Game`, and enjoy VidēreLongē.
 
 ## My game is crashing when I launch? What do I do?
 

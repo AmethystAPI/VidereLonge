@@ -1,3 +1,4 @@
+#include "minecraft/src-client/common/client/game/ClientInstance.h"
 #include "amethyst/Memory.h"
 #include "MemoryUtils.h"
 #include <thread>
@@ -5,22 +6,22 @@
 
 class FovManager {
 private:
-    __bfloat16 initialFov;
-    HANDLE hProcess = 0;
     bool zoom = false;
+    float initialFov;    
 
+    HANDLE getProccess();
     uintptr_t getAddress();
+
+    float getFov();
+    void setFov(float fov);
+
+    void zoomIn();
+    void zoomOut();
 public:
     FovManager();
 
-    __bfloat16 getFov();
-    void setFov(__bfloat16 fov);
-    void resetFov();
-
-    void tick();
-    void zoomIn();
-    void zoomOut();
-
-    void buttonUp();
     void buttonDown();
+    void buttonUp();
+    void resetFov();
+    void tick();
 };

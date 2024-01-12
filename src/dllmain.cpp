@@ -1,33 +1,45 @@
-#include "minecraft/src-client/common/client/renderer/LevelRendererPlayer.h"
-#include "minecraft/src-client/common/client/game/ClientInstance.h"
-
 #include "amethyst/InputManager.h"
 #include "amethyst/HookManager.h"
 #include "amethyst/Log.h"
-#include "MinHook.h"
-
 #include "FovManager.h"
-#include <thread>
 
 #define ModFunction extern "C" __declspec(dllexport)
 
-static ClientInstance* gameClient = nullptr;
-FovManager* fovManager = new FovManager();
+ClientInstance* gameClient = nullptr;
 HookManager hookManager;
+FovManager* fovManager;
 
 ModFunction void RegisterInputs(InputManager* inputManager) { inputManager->RegisterInput("zoom", 0x43); }
-
-ModFunction void Initialize(const char* gameVersion, InputManager* inputManager) { 
+ModFunction void Initialize(const char* _, InputManager* inputManager) {
     MH_Initialize();
 
-    inputManager->AddButtonDownHandler("zoom", [](FocusImpact fi, IClientInstance ci) { fovManager->buttonDown(); });
-    inputManager->AddButtonUpHandler("zoom", [](FocusImpact fi, IClientInstance ci) { fovManager->buttonUp(); });
+    inputManager->AddButtonDownHandler("zoom", [](FocusImpact f, ClientInstance c) { if(fovManager != nullptr) fovManager->buttonDown(); });
+    inputManager->AddButtonUpHandler("zoom", [](FocusImpact f, ClientInstance c) { if(fovManager != nullptr) fovManager->buttonUp(); });
 }
 
-ModFunction void OnTickAfter() { fovManager->tick(); }
+ModFunction void OnStartJoinGame(ClientInstance* clientInstance) { 
+    gameClient = clientInstance;
+}
+
+ModFunction void AfterTick() {
+    if(gameClient == nullptr) return;
+
+    LocalPlayer* player = gameClient->getLocalPlayer();
+    if(player == nullptr && fovManager != nullptr) {
+        fovManager->resetFov();
+        free(fovManager);
+        fovManager = nullptr;
+    } else if(player != nullptr && fovManager == nullptr)
+        fovManager = new FovManager();
+    else if(player != nullptr && fovManager != nullptr)
+        fovManager->tick();
+}
+
 ModFunction void Shutdown() {
-    fovManager->resetFov();
-    free(fovManager);
+    if(fovManager != nullptr) {
+        fovManager->resetFov();
+        free(fovManager);
+    }
 
     hookManager.Shutdown();
 }
