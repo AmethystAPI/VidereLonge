@@ -17,7 +17,7 @@ uintptr_t FovManager::getAddress() {
 float FovManager::getFov() {
     static uintptr_t address = getAddress();
     static HANDLE process = getProccess();
-    float tmpFov;
+    float tmpFov = 0.0;
 
     ReadProcessMemory(process, (BYTE*)address, &tmpFov, sizeof(tmpFov), nullptr);
     if(tmpFov == 0) {

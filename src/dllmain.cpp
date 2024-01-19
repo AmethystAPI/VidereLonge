@@ -27,7 +27,7 @@ ModFunction void AfterTick() {
     LocalPlayer* player = gameClient->getLocalPlayer();
     if(player == nullptr && fovManager != nullptr) {
         fovManager->resetFov();
-        free(fovManager);
+        delete fovManager;
         fovManager = nullptr;
     } else if(player != nullptr && fovManager == nullptr)
         fovManager = new FovManager();
