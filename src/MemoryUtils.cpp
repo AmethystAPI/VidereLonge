@@ -17,7 +17,7 @@ DWORD GetProcessIdByName(const wchar_t* processName) {
     DWORD processId = 0;
 
     if (snapshot != INVALID_HANDLE_VALUE) {
-        PROCESSENTRY32 processEntry;
+        PROCESSENTRY32 processEntry = {0}; //can also use ZeroMemory(&processEntry, sizeof(processEntry)); instead of 0
         processEntry.dwSize = sizeof(processEntry);
 
         if (Process32First(snapshot, &processEntry)) {
