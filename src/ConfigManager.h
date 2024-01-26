@@ -1,6 +1,7 @@
-#include "amethyst/Utility.h"
 #include "amethyst/Log.h"
 #include "Json.hpp"
+
+#include "amethyst/Utility.h"
 
 #include <filesystem>
 #include <iostream>
@@ -13,10 +14,10 @@ using json = nlohmann::json;
 class ConfigManager {
 private:
     std::string defaultConfig = 
-        "{"                                     \
-        "   \"zoomType\": \"gradual\","         \
-        "   \"targetFov\": 10.0,"               \
-        "   \"zoomRate\": 1.5"                  \
+        "{\n"                                   \
+        "   \"zoomType\": \"gradual\",\n"       \
+        "   \"targetFov\": 10.0,\n"             \
+        "   \"zoomRate\": 1.5\n"                \
         "}";
 
     std::string zoomType;
