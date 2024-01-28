@@ -10,7 +10,6 @@
 
 ConfigManager configManager;
 HookManager hookManager;
-
 float initialFov;
 bool releasing;
 bool pressed;
@@ -42,7 +41,7 @@ inline void gradualRelease() {
     } else fov += zoomRate;
 }
 
-static void OnTick() {
+void OnTick() {
     static std::string type = configManager.getZoomType();
     static float targetFov = configManager.getTargetFov();
     
@@ -56,10 +55,10 @@ static void OnTick() {
 }
 
 ModFunction void RegisterInputs(InputManager* inputManager) { inputManager->RegisterInput("zoom", 0x56); }
-ModFunction void Initialize(HookManager* hookManager, Amethyst::EventManager* eventManager, InputManager* inputManager) {
+ModFunction void Initialize(Amethyst::EventManager* eventManager, InputManager* inputManager) {
     MH_Initialize();
 
-    hookManager->CreateHook(
+    hookManager.CreateHook(
         SigScan("48 8B C4 48 89 58 ? 48 89 70 ? 57 48 81 EC ? ? ? ? 0F 29 70 ? 0F 29 78 ? 44 0F 29 40 ? 44 0F 29 48 ? 48 8B 05"),
         &LevelRendererPlayer_getFov, reinterpret_cast<void**>(&getFov));
 
@@ -68,12 +67,16 @@ ModFunction void Initialize(HookManager* hookManager, Amethyst::EventManager* ev
         pressed = true;
     });
 
-    inputManager->AddButtonUpHandler("zoom", [](FocusImpact f, ClientInstance c) { 
-        releasing = true;
+    inputManager->AddButtonUpHandler("zoom", [](FocusImpact f, ClientInstance c) {
+        static std::string type = configManager.getZoomType();
+
+        if(type == "gradual") releasing = true;
         pressed = false;
     });
 
     eventManager->beforeTick.AddListener(OnTick);
+
+    Log::Info("[VidereLonge] Mod successfully initialized!");
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) { return TRUE; }
