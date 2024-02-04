@@ -1,4 +1,5 @@
 #include "minecraft/src-client/common/client/renderer/game/LevelRendererPlayer.h"
+#include "minecraft/src/common/world/item/Item.h"
 #include "amethyst/events/EventManager.h"
 #include "amethyst/InputManager.h"
 #include "amethyst/HookManager.h"
@@ -9,17 +10,18 @@
 #define ModFunction extern "C" __declspec(dllexport)
 
 ConfigManager configManager;
+SafetyHookInline getFov;
 HookManager hookManager;
 float initialFov;
 bool releasing;
 bool pressed;
 float fov;
 
-LevelRendererPlayer::_getFov getFov;
+
 static float LevelRendererPlayer_getFov(LevelRendererPlayer* self, float a, bool applyEffects) {
     if(pressed || releasing) return fov;
     else {
-        initialFov = getFov(self, a, applyEffects);
+        initialFov = getFov.thiscall<float>(self, a, applyEffects);
         return fov = initialFov;
     }
 }
@@ -55,12 +57,9 @@ void OnTick() {
 }
 
 ModFunction void RegisterInputs(InputManager* inputManager) { inputManager->RegisterInput("zoom", 0x56); }
-ModFunction void Initialize(Amethyst::EventManager* eventManager, InputManager* inputManager) {
-    MH_Initialize();
-
-    hookManager.CreateHook(
-        SigScan("48 8B C4 48 89 58 ? 48 89 70 ? 57 48 81 EC ? ? ? ? 0F 29 70 ? 0F 29 78 ? 44 0F 29 40 ? 44 0F 29 48 ? 48 8B 05"),
-        &LevelRendererPlayer_getFov, reinterpret_cast<void**>(&getFov));
+ModFunction void Initialize(HookManager* hookManager, Amethyst::EventManager* eventManager, InputManager* inputManager) {
+    hookManager->RegisterFunction(&LevelRendererPlayer::getFov, "48 8B C4 48 89 58 ? 48 89 70 ? 57 48 81 EC ? ? ? ? 0F 29 70 ? 0F 29 78 ? 44 0F 29 40 ? 44 0F 29 48 ? 48 8B 05");
+    hookManager->CreateHook(&LevelRendererPlayer::getFov, getFov, &LevelRendererPlayer_getFov);
 
     inputManager->AddButtonDownHandler("zoom", [](FocusImpact f, ClientInstance c) {
         releasing = false;

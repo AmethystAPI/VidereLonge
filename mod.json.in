@@ -1,0 +1,8 @@
+{
+    "meta": {
+        "description": "An Amethyst mod that changes the in-game FOV.",
+        "author": "ATXL (566770844286844953)",
+        "is_runtime": false
+    },
+    "dependencies": []
+}

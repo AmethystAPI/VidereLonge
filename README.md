@@ -72,6 +72,36 @@ Join the [Amethyst modding Discord guild](https://discord.gg/DcCksKssfD), we'll 
 
     <img src="assets/keybindHover.png" width="300"/>
 
+## How do I change the config?
+1.  Open the mods folder.
+
+    <img src="assets/modFolderHover.png" width="200"/>
+
+2. Find the VidēreLongē folder.
+    
+    <img src="assets/movedFolders.png" width="400"/>
+
+3. Open `config.json` and change it to whatever you please.
+
+    <img src="assets/modConfig.png" width="400"/>
+
+> **Note**
+> A default config.json should be made automatically once you start the game however you can still manually make it if you like.
+> ````json
+> {
+>    "zoomType": "gradual",
+>    "targetFov": 10.0,
+>    "zoomRate": 1.5
+> }
+> ````
+
+4. The config format is the following:
+    * `zoomType` can either be `instant` or `gradual`. Instant sets your FOV to the `targetFov` the *intstant* you press the zoom key and `gradual` zooms in slowly.
+    * `targetFov` is the FOV the mod will stop at when you press the zoomKey.
+    * `zoomRate` is for the `gradual` mode. For every tick your FOV will decrease by this amount.
+
+    <img src="assets/editConfig.png" width="400"/>
+
 ## How was the banner made?
 * This was made with Blender using two assets from Sketchfab.
 * [Construction Steve](https://sketchfab.com/3d-models/construction-steve-41f6a232772c4b069eab765ef96a0ec1) by [Ghost99](https://sketchfab.com/Ghost99) using the [CC By 4.0 Deed License](https://creativecommons.org/licenses/by/4.0/). This work was modified.
