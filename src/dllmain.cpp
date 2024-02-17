@@ -1,5 +1,4 @@
 #include "minecraft/src-client/common/client/renderer/game/LevelRendererPlayer.h"
-#include "minecraft/src/common/world/item/Item.h"
 #include "amethyst/events/EventManager.h"
 #include "amethyst/InputManager.h"
 #include "amethyst/HookManager.h"
