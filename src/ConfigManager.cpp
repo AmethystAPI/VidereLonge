@@ -1,5 +1,6 @@
-#include "ConfigManager.h"
+#include "ConfigManager.hpp"
 
+// If anyone knows a better way to do this and make it look cleaner please help me.
 ConfigManager::ConfigManager() {
     std::string configPath = GetAmethystFolder() + "mods/VidereLonge@" + MOD_VERSION + "/config.json";
     
@@ -32,32 +33,23 @@ ConfigManager::ConfigManager() {
         throw error;
     }
 
+    json sensitivityDampen = data["sensitivityDampen"];
     json targetFov = data["targetFov"];
     json zoomType = data["zoomType"];
-    json zoomRate = data["zoomRate"];
+    json duration = data["duration"];
 
+    if (!sensitivityDampen.is_number_float())
+        throw std::exception("[VidereLonge] Field \"sensitivityDampen\" should be of type \"float\" in config.json");
     if (!targetFov.is_number_float())
         throw std::exception("[VidereLonge] Field \"targetFov\" should be of type \"float\" in config.json");
     if (!zoomType.is_string())
         throw std::exception("[VidereLonge] Field \"zoomType\" should be of type \"string\" in config.json");
-    if (!data["zoomRate"].is_number_float())
-        throw std::exception("[VidereLonge] Field \"zoomRate\" should be of type \"float\" in config.json");
+    if (!data["duration"].is_number_float())
+        throw std::exception("[VidereLonge] Field \"duration\" should be of type \"float\" in config.json");
 
-
+    this->sensitivityDampen = sensitivityDampen;
     this->targetFov = targetFov;
     this->zoomType = zoomType;
-    this->zoomRate = zoomRate;
+    this->duration = duration;
     Log::Info("[VidereLonge] Successfully loaded config.json from \"{}\"", configPath);
-}
-
-std::string ConfigManager::getZoomType() {
-    return zoomType;
-}
-
-float ConfigManager::getTargetFov() {
-    return targetFov;
-}
-
-float ConfigManager::getZoomRate() {
-    return zoomRate;
 }

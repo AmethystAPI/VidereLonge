@@ -1,4 +1,5 @@
-#include "amethyst/Log.h"
+#pragma once
+#include "amethyst/Log.hpp"
 #include "Json.hpp"
 
 #include "amethyst/Utility.h"
@@ -16,18 +17,23 @@ private:
     std::string defaultConfig = 
         "{\n"                                   \
         "   \"zoomType\": \"gradual\",\n"       \
+        "   \"sensitivityDampen\": 90.0,\n"     \
         "   \"targetFov\": 10.0,\n"             \
-        "   \"zoomRate\": 1.5\n"                \
+        "   \"duration\": 0.2\n"                \
         "}";
 
-    std::string zoomType;
+    float sensitivityDampen;
     float targetFov;
-    float zoomRate;
+    float duration;
+
+    std::string zoomType;
 
 public:
     ConfigManager();
 
-    std::string getZoomType();
-    float getTargetFov();
-    float getZoomRate();
+    inline float getSensitivityDampen() { return sensitivityDampen; }
+    inline float getTargetFov() { return targetFov; }
+    inline float getDuration() { return duration; }
+
+    std::string getZoomType() { return zoomType; }
 };

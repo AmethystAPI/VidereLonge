@@ -1,5 +1,7 @@
 {
     "meta": {
+        "name": "VidēreLongē",
+        "version": "@MOD_VERSION@",
         "description": "An Amethyst mod that changes the in-game FOV.",
         "author": "ATXL (566770844286844953)",
         "is_runtime": false

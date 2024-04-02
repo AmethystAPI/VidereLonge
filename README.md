@@ -21,8 +21,8 @@
   [![MIT License](https://img.shields.io/github/license/ATXLtheAxolotl/VidereLonge.svg?style=for-the-badge)](https://github.com/ATXLtheAxolotl/VidereLonge/blob/main/License.md)
 </div>
 
-## VidēreLongē v1.0.0
-Currently stable on Minecraft Bedrock Edition 1.20.51 with Amethyst Runtime 1.1.0
+## VidēreLongē v1.2.0
+Currently stable on Minecraft Bedrock Edition 1.20.71 with Amethyst Runtime 1.2.1
 
 <video controls>
     <source src="./assets/VidereLongeExample.mp4" type="video/mp4">
@@ -33,7 +33,7 @@ Currently stable on Minecraft Bedrock Edition 1.20.51 with Amethyst Runtime 1.1.
 
 2. Use a Minecraft version manager, for example [Bedrock Launcher](https://bedrocklauncher.github.io/) or [MCLauncher](https://github.com/MCMrARM/mc-w10-version-launcher) (most require your PC user account to have administrator level premissions).
 
-3. Download, play, and close Minecraft Bedrock 1.20.51
+3. Download, play, and close Minecraft Bedrock 1.20.71
 
 4. Find and install the latest Amethyst Launcher and Runtime release in [Amethyst's releases page](https://github.com/FrederoxDev/Amethyst/releases/latest).
 
@@ -51,7 +51,7 @@ Currently stable on Minecraft Bedrock Edition 1.20.51 with Amethyst Runtime 1.1.
 
     <img src="assets/movedFolders.png" width="400"/>
 
-10. Relaunch AmethystLauncher, select `AmethystRuntime@1.0.2` under `Runtime Mod`, and click `VidereLonge@1.0.0` under `Inactive Mods` to activate it. The end result should look like this.
+10. Relaunch AmethystLauncher, select `AmethystRuntime@1.2.1` under `Runtime Mod`, and click `VidereLonge@1.2.0` under `Inactive Mods` to activate it. The end result should look like this.
 
 11. Click `Launch Game`, and enjoy VidēreLongē.
 
@@ -89,18 +89,18 @@ Join the [Amethyst modding Discord guild](https://discord.gg/DcCksKssfD), we'll 
 > A default config.json should be made automatically once you start the game however you can still manually make it if you like.
 > ````json
 > {
->    "zoomType": "gradual",
->    "targetFov": 10.0,
->    "zoomRate": 1.5
+>   "zoomType": "gradual",
+>   "sensitivityDampen": 90.0,
+>   "targetFov": 10.0,
+>   "duration": 0.2
 > }
 > ````
 
 4. The config format is the following:
     * `zoomType` can either be `instant` or `gradual`. Instant sets your FOV to the `targetFov` the *intstant* you press the zoom key and `gradual` zooms in slowly.
-    * `targetFov` is the FOV the mod will stop at when you press the zoomKey.
-    * `zoomRate` is for the `gradual` mode. For every tick your FOV will decrease by this amount.
-
-    <img src="assets/editConfig.png" width="400"/>
+    * `sensitivityDampen` is the percentage you want your sensitivity to decrease by when zoomed.
+    * `targetFov` is the FOV the mod will stop at when you press the zoom key.
+    * `duration` is for the `gradual` mode. In this amount of time (seconds) you will reach the `targetFov`.
 
 ## How was the banner made?
 * This was made with Blender using two assets from Sketchfab.

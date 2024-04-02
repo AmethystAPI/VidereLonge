@@ -1,78 +1,55 @@
-#include "minecraft/src-client/common/client/renderer/game/LevelRendererPlayer.h"
-#include "amethyst/events/EventManager.h"
-#include "amethyst/InputManager.h"
-#include "amethyst/HookManager.h"
-#include "amethyst/Log.h"
+#pragma once
+#include "minecraft/src-client/common/client/renderer/game/LevelRendererPlayer.hpp"
+#include "minecraft/src-client/common/client/options/BaseOptions.hpp"
 
-#include "ConfigManager.h"
+#include "amethyst/runtime/events/EventManager.hpp"
+#include "amethyst/runtime/AmethystContext.hpp"
+#include "amethyst/runtime/HookManager.hpp"
+#include "amethyst/Log.hpp"
 
-#define ModFunction extern "C" __declspec(dllexport)
+#include "ConfigManager.hpp"
+#include "ZoomManager.hpp"
 
-ConfigManager configManager;
-SafetyHookInline getFov;
-HookManager hookManager;
-float initialFov;
-bool releasing;
-bool pressed;
-float fov;
+ConfigManager* configManager;
+ZoomManager* zoomManager;
 
+AmethystContext* context;
 
-static float LevelRendererPlayer_getFov(LevelRendererPlayer* self, float a, bool applyEffects) {
-    if(pressed || releasing) return fov;
-    else {
-        initialFov = getFov.thiscall<float>(self, a, applyEffects);
-        return fov = initialFov;
+void RegisterInputs(Amethyst::InputManager* input) { input->RegisterNewInput("zoom", { 0x43 }); }
+void OnStartJoinGame(ClientInstance* ci) {
+    context->mInputManager.AddButtonDownHandler("zoom", [](FocusImpact focus, ClientInstance& client) {
+        zoomManager->setEnabled(true);
+    }, false);
+
+    context->mInputManager.AddButtonUpHandler("zoom", [](FocusImpact focus, ClientInstance& client) {
+        zoomManager->setEnabled(false);
+    }, false);
+}
+
+void BeforeModShutdown() {
+    if(zoomManager != nullptr) {
+        delete zoomManager;
+        zoomManager = nullptr;
+    }
+
+    if(configManager != nullptr) {
+        delete configManager;
+        configManager = nullptr;
     }
 }
 
-inline void gradualPress() {
-    static float targetFov = configManager.getTargetFov();
-    static float zoomRate = configManager.getZoomRate();
+extern "C" __declspec(dllexport) void Initialize(AmethystContext* ctx) {
+    context = ctx;
 
-    if(fov <= targetFov) fov = targetFov;
-    else fov -= zoomRate;
-}
+    context->mHookManager.RegisterFunction<&LevelRendererPlayer::getFov>("48 8B C4 48 89 58 ? 48 89 70 ? 57 48 81 EC ? ? ? ? 0F 29 70 ? 0F 29 78 ? 44 0F 29 40 ? 44 0F 29 48 ? 48 8B 05");
+    context->mHookManager.RegisterFunction<&BaseOptions::getSensitivity>("40 53 48 83 EC ? 80 B9 ? ? ? ? ? 8B DA");
 
-inline void gradualRelease() {
-    static float zoomRate = configManager.getZoomRate();
+    configManager = new ConfigManager();
+    zoomManager = new ZoomManager(context, configManager);
 
-    if(fov >= initialFov) {
-        releasing = false;
-        fov = initialFov;
-    } else fov += zoomRate;
-}
-
-void OnTick() {
-    static std::string type = configManager.getZoomType();
-    static float targetFov = configManager.getTargetFov();
-    
-    if(type == "gradual") {
-        if(pressed) gradualPress();
-        else if(releasing) gradualRelease();
-    } else if(type == "instant") {
-        if(pressed) fov = targetFov;
-        else if(releasing) fov = initialFov;
-    }
-}
-
-ModFunction void RegisterInputs(InputManager* inputManager) { inputManager->RegisterInput("zoom", 0x56); }
-ModFunction void Initialize(HookManager* hookManager, Amethyst::EventManager* eventManager, InputManager* inputManager) {
-    hookManager->RegisterFunction(&LevelRendererPlayer::getFov, "48 8B C4 48 89 58 ? 48 89 70 ? 57 48 81 EC ? ? ? ? 0F 29 70 ? 0F 29 78 ? 44 0F 29 40 ? 44 0F 29 48 ? 48 8B 05");
-    hookManager->CreateHook(&LevelRendererPlayer::getFov, getFov, &LevelRendererPlayer_getFov);
-
-    inputManager->AddButtonDownHandler("zoom", [](FocusImpact f, ClientInstance c) {
-        releasing = false;
-        pressed = true;
-    });
-
-    inputManager->AddButtonUpHandler("zoom", [](FocusImpact f, ClientInstance c) {
-        static std::string type = configManager.getZoomType();
-
-        if(type == "gradual") releasing = true;
-        pressed = false;
-    });
-
-    eventManager->beforeTick.AddListener(OnTick);
+    context->mEventManager.beforeModShutdown.AddListener(BeforeModShutdown);
+    context->mEventManager.onStartJoinGame.AddListener(OnStartJoinGame);
+    context->mEventManager.registerInputs.AddListener(RegisterInputs);
 
     Log::Info("[VidereLonge] Mod successfully initialized!");
 }
