@@ -1,4 +1,7 @@
 #pragma once
+
+#define NOMINMAX
+
 #include "minecraft/src-client/common/client/renderer/game/LevelRendererPlayer.hpp"
 #include "minecraft/src-client/common/client/options/BaseOptions.hpp"
 

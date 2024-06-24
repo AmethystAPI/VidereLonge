@@ -2,7 +2,8 @@
 
 // If anyone knows a better way to do this and make it look cleaner please help me.
 ConfigManager::ConfigManager() {
-    std::string configPath = GetAmethystFolder() + "mods/VidereLonge@" + MOD_VERSION + "/config.json";
+    std::filesystem::path configPath = GetAmethystFolder() / L"mods" / L"VidereLonge@" += MOD_VERSION;
+    configPath += "/config.json";
     
     if(!fs::exists(configPath)) {
         Log::Warning("[VidereLonge] config.json does not exist, creating default config");
@@ -17,7 +18,7 @@ ConfigManager::ConfigManager() {
 
     std::ifstream configFile(configPath);
     if(!configFile.is_open()) {
-        Log::Error("[VidereLonge] Failed to open config.json {}", configPath);
+        Log::Error("[VidereLonge] Failed to open config.json {}", configPath.string());
         throw std::exception();
     }
 
@@ -51,5 +52,5 @@ ConfigManager::ConfigManager() {
     this->targetFov = targetFov;
     this->zoomType = zoomType;
     this->duration = duration;
-    Log::Info("[VidereLonge] Successfully loaded config.json from \"{}\"", configPath);
+    Log::Info("[VidereLonge] Successfully loaded config.json from \"{}\"", configPath.string());
 }

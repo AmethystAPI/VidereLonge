@@ -21,8 +21,8 @@
   [![MIT License](https://img.shields.io/github/license/ATXLtheAxolotl/VidereLonge.svg?style=for-the-badge)](https://github.com/ATXLtheAxolotl/VidereLonge/blob/main/License.md)
 </div>
 
-## VidēreLongē v1.2.0
-Currently stable on Minecraft Bedrock Edition 1.20.71 with Amethyst Runtime 1.2.1
+## VidēreLongē v1.3.0
+Currently stable on Minecraft Bedrock Edition 1.21.0.3 with Amethyst Runtime 1.3.0
 
 <video controls>
     <source src="./assets/VidereLongeExample.mp4" type="video/mp4">
@@ -33,7 +33,7 @@ Currently stable on Minecraft Bedrock Edition 1.20.71 with Amethyst Runtime 1.2.
 
 2. Use a Minecraft version manager, for example [Bedrock Launcher](https://bedrocklauncher.github.io/) or [MCLauncher](https://github.com/MCMrARM/mc-w10-version-launcher) (most require your PC user account to have administrator level premissions).
 
-3. Download, play, and close Minecraft Bedrock 1.20.71
+3. Download, play, and close Minecraft Bedrock 1.21.0.3
 
 4. Find and install the latest Amethyst Launcher and Runtime release in [Amethyst's releases page](https://github.com/FrederoxDev/Amethyst/releases/latest).
 
@@ -51,7 +51,7 @@ Currently stable on Minecraft Bedrock Edition 1.20.71 with Amethyst Runtime 1.2.
 
     <img src="assets/movedFolders.png" width="400"/>
 
-10. Relaunch AmethystLauncher, select `AmethystRuntime@1.2.1` under `Runtime Mod`, and click `VidereLonge@1.2.0` under `Inactive Mods` to activate it. The end result should look like this.
+10. Relaunch AmethystLauncher, select `AmethystRuntime@1.3.0` under `Runtime Mod`, and click `VidereLonge@1.3.0` under `Inactive Mods` to activate it. The end result should look like this.
 
 11. Click `Launch Game`, and enjoy VidēreLongē.
 

@@ -1,8 +1,7 @@
 #pragma once
+#include "amethyst/Utility.hpp"
 #include "amethyst/Log.hpp"
 #include "Json.hpp"
-
-#include "amethyst/Utility.h"
 
 #include <filesystem>
 #include <iostream>
