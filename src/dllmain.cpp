@@ -5,11 +5,11 @@
 #include "minecraft/src-client/common/client/renderer/game/LevelRendererPlayer.hpp"
 #include "minecraft/src-client/common/client/options/BaseOptions.hpp"
 
-#include "amethyst/runtime/events/GameEvents.hpp"
 #include "amethyst/runtime/events/InputEvents.hpp"
+#include "amethyst/runtime/events/GameEvents.hpp"
 #include "amethyst/runtime/events/ModEvents.hpp"
-#include "amethyst/runtime/ModContext.hpp"
 #include "amethyst/runtime/HookManager.hpp"
+#include "amethyst/runtime/ModContext.hpp"
 #include "amethyst/Log.hpp"
 
 #include "ConfigManager.hpp"

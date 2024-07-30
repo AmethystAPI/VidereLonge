@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 # Mod Options
 project(VidereLonge CXX ASM_NASM)
-set(MOD_VERSION "1.3.0")
+set(MOD_VERSION "1.3.1")
 set(MOD_AUTHOR "ATXL")
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
