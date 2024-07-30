@@ -5,9 +5,11 @@
 #include "minecraft/src-client/common/client/renderer/game/LevelRendererPlayer.hpp"
 #include "minecraft/src-client/common/client/options/BaseOptions.hpp"
 
-#include "amethyst/runtime/events/EventManager.hpp"
-#include "amethyst/runtime/AmethystContext.hpp"
+#include "amethyst/runtime/events/InputEvents.hpp"
+#include "amethyst/runtime/events/GameEvents.hpp"
+#include "amethyst/runtime/events/ModEvents.hpp"
 #include "amethyst/runtime/HookManager.hpp"
+#include "amethyst/runtime/ModContext.hpp"
 #include "amethyst/Log.hpp"
 
 #include "ConfigManager.hpp"
@@ -16,20 +18,20 @@
 ConfigManager* configManager;
 ZoomManager* zoomManager;
 
-AmethystContext* context;
+void RegisterInputs(RegisterInputsEvent& event) { event.inputManager.RegisterNewInput("zoom", { 0x43 }); }
+void OnStartJoinGame(OnStartJoinGameEvent& event) {
+    auto& inputs = *Amethyst::GetContext().mInputManager;
 
-void RegisterInputs(Amethyst::InputManager* input) { input->RegisterNewInput("zoom", { 0x43 }); }
-void OnStartJoinGame(ClientInstance* ci) {
-    context->mInputManager.AddButtonDownHandler("zoom", [](FocusImpact focus, ClientInstance& client) {
+    inputs.AddButtonDownHandler("zoom", [](FocusImpact focus, ClientInstance& client) {
         zoomManager->setEnabled(true);
     }, false);
 
-    context->mInputManager.AddButtonUpHandler("zoom", [](FocusImpact focus, ClientInstance& client) {
+    inputs.AddButtonUpHandler("zoom", [](FocusImpact focus, ClientInstance& client) {
         zoomManager->setEnabled(false);
     }, false);
 }
 
-void BeforeModShutdown() {
+void BeforeModShutdown(BeforeModShutdownEvent& event) {
     if(zoomManager != nullptr) {
         delete zoomManager;
         zoomManager = nullptr;
@@ -41,18 +43,21 @@ void BeforeModShutdown() {
     }
 }
 
-extern "C" __declspec(dllexport) void Initialize(AmethystContext* ctx) {
-    context = ctx;
+extern "C" __declspec(dllexport) void Initialize(AmethystContext& ctx) {
+    Amethyst::InitializeAmethystMod(ctx);
 
-    context->mHookManager.RegisterFunction<&LevelRendererPlayer::getFov>("48 8B C4 48 89 58 ? 48 89 70 ? 57 48 81 EC ? ? ? ? 0F 29 70 ? 0F 29 78 ? 44 0F 29 40 ? 44 0F 29 48 ? 48 8B 05");
-    context->mHookManager.RegisterFunction<&BaseOptions::getSensitivity>("40 53 48 83 EC ? 80 B9 ? ? ? ? ? 8B DA");
+    Amethyst::GetContext().mFeatures->enableInputSystem = true;
+
+    ctx.mHookManager->RegisterFunction<&LevelRendererPlayer::getFov>("48 8B C4 48 89 58 ? 48 89 70 ? 57 48 81 EC ? ? ? ? 0F 29 70 ? 0F 29 78 ? 44 0F 29 40 ? 44 0F 29 48 ? 48 8B 05");
+    ctx.mHookManager->RegisterFunction<&BaseOptions::getSensitivity>("40 53 48 83 EC ? 80 B9 ? ? ? ? ? 8B DA");
 
     configManager = new ConfigManager();
-    zoomManager = new ZoomManager(context, configManager);
+    zoomManager = new ZoomManager(ctx, configManager);
 
-    context->mEventManager.beforeModShutdown.AddListener(BeforeModShutdown);
-    context->mEventManager.onStartJoinGame.AddListener(OnStartJoinGame);
-    context->mEventManager.registerInputs.AddListener(RegisterInputs);
+    auto& events = Amethyst::GetEventBus();
+    events.AddListener<BeforeModShutdownEvent>(BeforeModShutdown);
+    events.AddListener<OnStartJoinGameEvent>(OnStartJoinGame);
+    events.AddListener<RegisterInputsEvent>(RegisterInputs);
 
     Log::Info("[VidereLonge] Mod successfully initialized!");
 }
