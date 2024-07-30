@@ -2,7 +2,7 @@
 #include "minecraft/src-client/common/client/renderer/game/LevelRendererPlayer.hpp"
 #include "minecraft/src-client/common/client/options/BaseOptions.hpp"
 
-#include "amethyst/runtime/AmethystContext.hpp"
+#include "amethyst/runtime/ModContext.hpp"
 #include "amethyst/runtime/HookManager.hpp"
 
 #include "ConfigManager.hpp"
@@ -10,7 +10,7 @@
 
 class ZoomManager {
 public:
-    ZoomManager(AmethystContext*, ConfigManager*);
+    ZoomManager(AmethystContext&, ConfigManager*);
     static ZoomManager* getInstance();
     void setEnabled(bool);
 

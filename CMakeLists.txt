@@ -5,6 +5,9 @@ project(VidereLonge CXX ASM_NASM)
 set(MOD_VERSION "1.3.0")
 set(MOD_AUTHOR "ATXL")
 
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /await")
+
 # Amethyst Minecraft Folder
 set(AmethystFolder "$ENV{localappdata}/Packages/Microsoft.MinecraftUWP_8wekyb3d8bbwe/LocalState/games/com.mojang/amethyst/") 
 

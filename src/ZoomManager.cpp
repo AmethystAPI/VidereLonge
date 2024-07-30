@@ -1,11 +1,11 @@
 #include "ZoomManager.hpp"
 
 static ZoomManager* mInstance;
-ZoomManager::ZoomManager(AmethystContext* context, ConfigManager* config) {
+ZoomManager::ZoomManager(AmethystContext& context, ConfigManager* config) {
     mConfig = config;
 
-    context->mHookManager.CreateHook<&BaseOptions::getSensitivity>(ZoomManager::mGetSensitivity, ZoomManager::sensitivityHook);
-    context->mHookManager.CreateHook<&LevelRendererPlayer::getFov>(ZoomManager::mGetFov, ZoomManager::fovHook);
+    context.mHookManager->CreateHook<&BaseOptions::getSensitivity>(ZoomManager::mGetSensitivity, ZoomManager::sensitivityHook);
+    context.mHookManager->CreateHook<&LevelRendererPlayer::getFov>(ZoomManager::mGetFov, ZoomManager::fovHook);
 
     mInstance = this;
 }
