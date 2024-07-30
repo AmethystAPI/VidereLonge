@@ -118,4 +118,4 @@ Join the [Amethyst modding Discord guild](https://discord.gg/DcCksKssfD), we'll 
 
 ## Contributions
 
-* Thanks to @KingRocco21 for updating the mod to AmethystRuntime@1.4.1 #9
+* Thanks to [@KingRocco21](https://github.com/KingRocco21) for updating the mod to AmethystRuntime@1.4.1 [#9](https://github.com/AmethystAPI/VidereLonge/pull/9)
