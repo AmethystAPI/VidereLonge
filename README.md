@@ -115,3 +115,7 @@ Join the [Amethyst modding Discord guild](https://discord.gg/DcCksKssfD), we'll 
 * This was made with Blender using two assets from Sketchfab.
 * [Construction Steve](https://sketchfab.com/3d-models/construction-steve-41f6a232772c4b069eab765ef96a0ec1) by [Ghost99](https://sketchfab.com/Ghost99) using the [CC By 4.0 Deed License](https://creativecommons.org/licenses/by/4.0/). This work was modified.
 * [Spyglass](https://sketchfab.com/3d-models/spyglass-d1c88de81f594dc79786f16d497fd908) by [Azumiru](https://sketchfab.com/Azumiru) using the [CC By 4.0 Deed License](https://creativecommons.org/licenses/by/4.0/).
+
+## Contributions
+
+* Thanks to @KingRocco21 for updating the mod to AmethystRuntime@1.4.1 #9
