@@ -4,18 +4,18 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${env:amethyst_src}/AmethystAPI/src",
-                "${env:amethyst_src}/AmethystAPI/include"
+                "${AMETHYST_SRC}/AmethystAPI/src",
+                "${AMETHYST_SRC}/AmethystAPI/include"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "windowsSdkVersion": "10.0.22000.0",
+            "windowsSdkVersion": "10.0.26100.0",
             "compilerPath": "cl.exe",
             "cStandard": "c17",
-            "cppStandard": "c++20",
+            "cppStandard": "c++23",
             "intelliSenseMode": "windows-msvc-x64"
         }
     ],

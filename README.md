@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/ATXLtheAxolotl/VidereLonge">
-    <img src="./assets/banner.png" alt="Vidēre Longē Banner">
+    <img src="./assets/banner.png" alt="VidereLonge Banner">
   </a>
 
   <p align="center">
@@ -21,7 +21,7 @@
   [![MIT License](https://img.shields.io/github/license/ATXLtheAxolotl/VidereLonge.svg?style=for-the-badge)](https://github.com/ATXLtheAxolotl/VidereLonge/blob/main/License.md)
 </div>
 
-## VidēreLongē v1.3.0
+## VidereLonge v1.3.0
 Currently stable on Minecraft Bedrock Edition 1.21.0.3 with Amethyst Runtime 1.3.0
 
 <video controls>
@@ -86,7 +86,7 @@ Join the [Amethyst modding Discord guild](https://discord.gg/DcCksKssfD), we'll 
 
     <img src="assets/openModsFolder.png" width=400 />
 
-2. Find the VidēreLongē folder.
+2. Find the VidereLonge folder.
     
     <img src="assets/movedFolders.png" width=400 />
 

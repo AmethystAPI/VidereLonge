@@ -1,0 +1,29 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "VidereLonge RP",
+        "description": "By ATXL",
+        "uuid": "bace27df-0bf6-49c8-810f-cd02e7aa03b1",
+        "version": [
+            1,
+            0,
+            0
+        ],
+        "min_engine_version": [
+            1,
+            21,
+            0
+        ]
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "dd818b1f-e2d0-409f-b3a6-66d85a610bf0",
+            "version": [
+                1,
+                0,
+                0
+            ]
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 #pragma once
-#include "minecraft/src-client/common/client/renderer/game/LevelRendererPlayer.hpp"
-#include "minecraft/src-client/common/client/options/BaseOptions.hpp"
+#include "mc/src-client/common/client/renderer/game/LevelRendererPlayer.hpp"
+#include "mc/src-client/common/client/options/BaseOptions.hpp"
 
 #include "amethyst/runtime/ModContext.hpp"
 #include "amethyst/runtime/HookManager.hpp"

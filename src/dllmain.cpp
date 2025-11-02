@@ -2,8 +2,8 @@
 
 #define NOMINMAX
 
-#include "minecraft/src-client/common/client/renderer/game/LevelRendererPlayer.hpp"
-#include "minecraft/src-client/common/client/options/BaseOptions.hpp"
+#include "mc/src-client/common/client/renderer/game/LevelRendererPlayer.hpp"
+#include "mc/src-client/common/client/options/BaseOptions.hpp"
 
 #include "amethyst/runtime/events/InputEvents.hpp"
 #include "amethyst/runtime/events/GameEvents.hpp"
