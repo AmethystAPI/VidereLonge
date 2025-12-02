@@ -6,60 +6,104 @@
 #include "mc/src-client/common/client/options/BaseOptions.hpp"
 
 #include "amethyst/runtime/events/InputEvents.hpp"
-#include "amethyst/runtime/events/GameEvents.hpp"
 #include "amethyst/runtime/events/ModEvents.hpp"
 #include "amethyst/runtime/HookManager.hpp"
 #include "amethyst/runtime/ModContext.hpp"
 #include "amethyst/Log.hpp"
 
 #include "ConfigManager.hpp"
-#include "ZoomManager.hpp"
+#include "dllmain.hpp"
 
-ConfigManager* configManager;
-ZoomManager* zoomManager;
+std::chrono::system_clock::time_point enabledStart;
+ConfigManager *configManager;
+boolean enabled;
 
-void RegisterInputs(RegisterInputsEvent& event) { event.inputManager.RegisterNewInput("zoom", { 0x43 }); }
-void OnStartJoinGame(OnStartJoinGameEvent& event) {
-    auto& inputs = *Amethyst::GetContext().mInputManager;
+SafetyHookInline _LevelRendererPlayer_getFov;
 
-    inputs.AddButtonDownHandler("zoom", [](FocusImpact focus, ClientInstance& client) {
-        zoomManager->setEnabled(true);
-    }, false);
+float LevelRendererPlayer_getFov(LevelRendererPlayer* self, float a, bool a2) {
+    static std::string zoomType = configManager->getZoomType();
+    static float targetFov = configManager->getTargetFov();
+    static float duration = configManager->getDuration();
 
-    inputs.AddButtonUpHandler("zoom", [](FocusImpact focus, ClientInstance& client) {
-        zoomManager->setEnabled(false);
-    }, false);
+    float currentFov = _LevelRendererPlayer_getFov.thiscall<float>(self, a, a2);
+    if(currentFov == 70.0f) return currentFov;
+
+    if(zoomType == "gradual") {
+        auto currentTime = std::chrono::system_clock::now();
+        std::chrono::duration<float> deltaTime = currentTime - enabledStart;
+
+        float time = std::clamp(deltaTime.count(), 0.0f, duration);
+        float rate = (currentFov - targetFov) / duration;
+
+        if(enabled)
+            return currentFov - (time * rate);
+        else return  time * rate;
+    } else if(zoomType == "instant" && enabled) return targetFov;
+    
+    return currentFov;
 }
 
-void BeforeModShutdown(BeforeModShutdownEvent& event) {
-    if(zoomManager != nullptr) {
-        delete zoomManager;
-        zoomManager = nullptr;
-    }
+SafetyHookInline _BaseOptions_getSensitivity;
+float BaseOptions_getSensitivity(BaseOptions* self, unsigned int inputMode) {
+    static float dampen = (100.0f - configManager->getSensitivityDampen()) / 100.0f;
 
-    if(configManager != nullptr) {
+    static std::string zoomType = configManager->getZoomType();
+    static float duration = configManager->getDuration();
+
+    float currentSensitivity = _BaseOptions_getSensitivity.thiscall<float>(self, inputMode);
+    float targetSensitivity = currentSensitivity * dampen;
+
+    if(zoomType == "gradual") {
+        auto currentTime = std::chrono::system_clock::now();
+        std::chrono::duration<float> deltaTime = currentTime - enabledStart;
+
+        float time = std::clamp(deltaTime.count(), 0.0f, duration);
+        float rate = (currentSensitivity - targetSensitivity) / duration;
+
+        if(enabled)
+            return (time * -rate) + currentSensitivity;
+        else return time * rate;
+    } else if(zoomType == "instant" && enabled) return targetSensitivity;
+
+    return currentSensitivity;
+}
+
+void RegisterInputs(RegisterInputsEvent &event) {
+    Amethyst::InputAction& zoomKeybind = event.inputManager.RegisterNewInput("zoom", {'C'}, true, Amethyst::KeybindContext::Gameplay);
+    zoomKeybind.addButtonDownHandler([](FocusImpact focus, ClientInstance& client) {
+        enabledStart = std::chrono::system_clock::now();
+        enabled = true;
+        return Amethyst::InputPassthrough::Consume;
+    });
+
+    zoomKeybind.addButtonUpHandler([](FocusImpact focus, ClientInstance& client) {
+        enabledStart = std::chrono::system_clock::now();
+        enabled = false;
+        return Amethyst::InputPassthrough::Consume;
+    });
+}
+
+void BeforeModShutdown(BeforeModShutdownEvent &event) {
+    if (configManager != nullptr)
+    {
         delete configManager;
         configManager = nullptr;
     }
 }
 
-extern "C" __declspec(dllexport) void Initialize(AmethystContext& ctx) {
-    Amethyst::InitializeAmethystMod(ctx);
+ModFunction void Initialize(AmethystContext &ctx, const Amethyst::Mod &mod) {
+    Amethyst::InitializeAmethystMod(ctx, mod);
 
-    Amethyst::GetContext().mFeatures->enableInputSystem = true;
+    std::string versionedName = mod.mInfo->GetVersionedName();
+    configManager = new ConfigManager(ctx.mPlatform.get()->GetAmethystFolder(), versionedName);
 
-    ctx.mHookManager->RegisterFunction<&LevelRendererPlayer::getFov>("48 8B C4 48 89 58 ? 48 89 70 ? 57 48 81 EC ? ? ? ? 0F 29 70 ? 0F 29 78 ? 44 0F 29 40 ? 44 0F 29 48 ? 48 8B 05");
-    ctx.mHookManager->RegisterFunction<&BaseOptions::getSensitivity>("40 53 48 83 EC ? 80 B9 ? ? ? ? ? 8B DA");
-
-    configManager = new ConfigManager();
-    zoomManager = new ZoomManager(ctx, configManager);
-
-    auto& events = Amethyst::GetEventBus();
+    auto &events = Amethyst::GetEventBus();
     events.AddListener<BeforeModShutdownEvent>(BeforeModShutdown);
-    events.AddListener<OnStartJoinGameEvent>(OnStartJoinGame);
     events.AddListener<RegisterInputsEvent>(RegisterInputs);
+
+    auto& hooks = Amethyst::GetHookManager();
+    HOOK(LevelRendererPlayer, getFov);
+    HOOK(BaseOptions, getSensitivity);
 
     Log::Info("[VidereLonge] Mod successfully initialized!");
 }
-
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) { return TRUE; }

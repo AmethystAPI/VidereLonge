@@ -1,8 +1,8 @@
 #include "ConfigManager.hpp"
 
 // If anyone knows a better way to do this and make it look cleaner please help me.
-ConfigManager::ConfigManager() {
-    std::filesystem::path configPath = GetAmethystFolder() / L"mods" / L"VidereLonge@" += MOD_VERSION;
+ConfigManager::ConfigManager(fs::path baseFolder, std::string versionedName) {
+    std::filesystem::path configPath = baseFolder / L"mods" / versionedName;
     configPath += "/config.json";
     
     if(!fs::exists(configPath)) {
@@ -12,7 +12,7 @@ ConfigManager::ConfigManager() {
 
         if(out.is_open())
             out << defaultConfig;
-
+ 
         out.close();
     }
 

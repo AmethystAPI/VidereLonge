@@ -28,7 +28,7 @@ private:
     std::string zoomType;
 
 public:
-    ConfigManager();
+    ConfigManager(fs::path baseFolder, std::string versionedName);
 
     inline float getSensitivityDampen() { return sensitivityDampen; }
     inline float getTargetFov() { return targetFov; }

@@ -10,7 +10,7 @@
             {
                 "dependency_uuid": "e56c3987-fd4a-4590-9923-a07fc4be7250",
                 "dependency_namespace": "amethyst",
-                "version_range": ">=2.0.0 <2.1.0"
+                "version_range": ">=2.2.0 <2.3.0"
             }
         ]
     }
