@@ -21,52 +21,27 @@
   [![MIT License](https://img.shields.io/github/license/ATXLtheAxolotl/VidereLonge.svg?style=for-the-badge)](https://github.com/ATXLtheAxolotl/VidereLonge/blob/main/License.md)
 </div>
 
-## VidereLonge v1.3.0
-Currently stable on Minecraft Bedrock Edition 1.21.0.3 with Amethyst Runtime 1.3.0
+## VidereLonge v1.3.1
+Currently stable on Minecraft Bedrock Edition 1.21.0.3 with Amethyst Runtime 2.2.1
 
 <video controls>
     <source src="./assets/VidereLongeExample.mp4" type="video/mp4">
 </video>
 
-## How do I run this?
-1. Ensure you have developer mode  enabled on Windows, if you don't know how see [this tutorial](https://consumer.huawei.com/en/support/content/en-us15594140/#:~:text=Click%20the%20Windows%20icon%20and,Mode%20in%20certain%20system%20versions).
+## Contributions
 
-2. Download, play, and close Minecraft Bedrock 1.21.0.3
+* Thanks to [@KingRocco21](https://github.com/KingRocco21) for updating the mod to AmethystRuntime@1.4.1 [#9](https://github.com/AmethystAPI/VidereLonge/pull/9)
 
-3. Find and install the latest Amethyst [Launcher](https://github.com/FrederoxDev/Amethyst-Launcher/releases/latest) and [Runtime](https://github.com/FrederoxDev/Amethyst/releases/latest) release Amethyst's releases page.
+## To-do
+[ ] #3 - Cleanup code (never!)
 
-4. Go to the mod manager menu and click the `Open Mods Folder` button.
+[ ] Move settings to the GUI.
 
-    <img src="assets/openModsFolder.png" width=400 />
-
-5. Download the latest [ViderēLongē release](https://github.com/ATXLtheAxolotl/VidereLonge/releases/latest).
-
-6. Bring the AmethystRuntime and ViderēLongē zip files to your mods folder like this:
-
-    <img src="assets/modZipped.png" width=400 />
-
-7. Extract both zip files, the structure should look like the following.
-
-    <img src="assets/movedFolders.png" width=400 />
-
-8. Go back to Amethyst Launcher, reload the page with `Ctrl + R`, then go to the profile editor page.
-
-9. Create or use your existing mod profile.
-
-    <img src="assets/profileEditor.png" width=400 />
-
-10. Select the latest runtime that you downloaded, and click ViderēLongē from the `Inactive Mods` list to bring it over to the active mods. After that, press `Save Profile`.
-
-    <img src="assets/selectedMods.png" width=400 />
-
-11. Launch the game, and have fun!
-
-    <img src="assets/launchGame.png" width=400 />
-
+[ ] #8 - Scroll to change zoom level.
 
 ## My game is crashing when I launch? What do I do?
 
-Join the [Amethyst modding Discord guild](https://discord.gg/DcCksKssfD), we'll be happy to help (just don't spam ping us ;) )!
+Join the [Amethyst modding Discord guild](https://discord.gg/DcCksKssfD), we'll be happy to help (just don't spam the others)! Ping ATXL instead.
 
 ## How do I change the zoom keybind?
 1. Go to your settings
@@ -77,7 +52,7 @@ Join the [Amethyst modding Discord guild](https://discord.gg/DcCksKssfD), we'll 
 
     <img src="assets/hoverKeyboardMouse.png" width=400 />
 
-3. Scroll until you find `key.zoom`, then bind it to the desired key.
+3. Scroll to the bottom for `Zoom`, then bind it to the desired key.
 
     <img src="assets/keybindHover.png" width=400 />
 
@@ -111,11 +86,9 @@ Join the [Amethyst modding Discord guild](https://discord.gg/DcCksKssfD), we'll 
     * `targetFov` is the FOV the mod will stop at when you press the zoom key.
     * `duration` is for the `gradual` mode. In this amount of time (seconds) you will reach the `targetFov`.
 
+
+
 ## How was the banner made?
 * This was made with Blender using two assets from Sketchfab.
 * [Construction Steve](https://sketchfab.com/3d-models/construction-steve-41f6a232772c4b069eab765ef96a0ec1) by [Ghost99](https://sketchfab.com/Ghost99) using the [CC By 4.0 Deed License](https://creativecommons.org/licenses/by/4.0/). This work was modified.
 * [Spyglass](https://sketchfab.com/3d-models/spyglass-d1c88de81f594dc79786f16d497fd908) by [Azumiru](https://sketchfab.com/Azumiru) using the [CC By 4.0 Deed License](https://creativecommons.org/licenses/by/4.0/).
-
-## Contributions
-
-* Thanks to [@KingRocco21](https://github.com/KingRocco21) for updating the mod to AmethystRuntime@1.4.1 [#9](https://github.com/AmethystAPI/VidereLonge/pull/9)

@@ -20,13 +20,13 @@ boolean enabled;
 
 SafetyHookInline _LevelRendererPlayer_getFov;
 
-float LevelRendererPlayer_getFov(LevelRendererPlayer* self, float a, bool a2) {
+float LevelRendererPlayer_getFov(LevelRendererPlayer* self, float originalFOV, bool applyEffects) {
     static std::string zoomType = configManager->getZoomType();
     static float targetFov = configManager->getTargetFov();
     static float duration = configManager->getDuration();
 
-    float currentFov = _LevelRendererPlayer_getFov.thiscall<float>(self, a, a2);
-    if(currentFov == 70.0f) return currentFov;
+    float currentFov = _LevelRendererPlayer_getFov.thiscall<float>(self, originalFOV, applyEffects);
+    if(currentFov == 70.0f && !applyEffects) return currentFov;
 
     if(zoomType == "gradual") {
         auto currentTime = std::chrono::system_clock::now();
@@ -37,7 +37,7 @@ float LevelRendererPlayer_getFov(LevelRendererPlayer* self, float a, bool a2) {
 
         if(enabled)
             return currentFov - (time * rate);
-        else return  time * rate;
+        else return targetFov + (time * rate);
     } else if(zoomType == "instant" && enabled) return targetFov;
     
     return currentFov;
